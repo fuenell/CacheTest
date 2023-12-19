@@ -1,0 +1,23 @@
+
+name: Build project
+
+on:
+  push:
+    tags:        
+      - v**
+jobs:
+  CacheTest:
+    name: Cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Expose as artifact
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-A
+          restore-keys: Library-
+      - name: Read Me
+        run: |
+          cat Library/test.txt
+          mkdir Library
+          echo "test message" > Library/test.txt
