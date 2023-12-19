@@ -3,10 +3,9 @@ name: Cache project
 
 on:
   push:
-    tags:        
-      - v**
-          branches:
-            - main
+    branches:
+      - main
+
 jobs:
   CacheTest:
     name: Cache
@@ -17,7 +16,7 @@ jobs:
         with:
           path: Library
           key: Library
-          restore-keys: Library-
+          restore-keys: Library-*
       - name: Read Me
         run: |
           [ -f Library/test.txt ] && cat Library/test.txt
