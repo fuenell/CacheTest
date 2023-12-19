@@ -1,5 +1,5 @@
 
-name: Build project
+name: Cache project
 
 on:
   push:
@@ -10,12 +10,12 @@ jobs:
     name: Cache
     runs-on: ubuntu-latest
     steps:
-      - name: Expose as artifact
+      - name: CacheLoadAndSave
         uses: actions/cache@v3
         with:
           path: Library
-          key: Library-A
-          restore-keys: Library-
+          key: Library
+          restore-keys: Library
       - name: Read Me
         run: |
           [ -f Library/test.txt ] && cat Library/test.txt
