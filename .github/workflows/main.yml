@@ -15,7 +15,7 @@ jobs:
         with:
           path: Library
           key: Library
-          restore-keys: Library
+          restore-keys: Library-
       - name: Read Me
         run: |
           [ -f Library/test.txt ] && cat Library/test.txt
