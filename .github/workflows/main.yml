@@ -21,3 +21,4 @@ jobs:
           [ -f Library/test.txt ] && cat Library/test.txt
           mkdir -p Library
           echo "test message" > Library/test.txt
+          echo "$GITHUB_CACHE" | tr "," "\n"
