@@ -3,24 +3,34 @@ name: Cache project
 
 on:
   push:
-    branches:
-      - main
-
+    tags:
+      - v*
 
 jobs:
   CacheTest:
     name: Cache
     runs-on: ubuntu-latest
     steps:
-      - name: CacheLoadAndSave
-        uses: actions/cache@v3
+      
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache/restore@v3
         with:
-          path: Library
+          path: |
+            Library
           key: Library
-          restore-keys: Library-*
-      - name: Read Me
+
+      - name: Create File
         run: |
           [ -f Library/test.txt ] && cat Library/test.txt
           mkdir -p Library
           echo "test message" > Library/test.txt
           echo "$GITHUB_CACHE" | tr "," "\n"
+
+      - name: Save Primes
+        id: cache-primes-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            Library
+          key: Library
