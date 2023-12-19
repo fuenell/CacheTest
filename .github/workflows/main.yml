@@ -18,6 +18,6 @@ jobs:
           restore-keys: Library-
       - name: Read Me
         run: |
-          cat Library/test.txt
+          [ -f Library/test.txt ] && cat Library/test.txt
           mkdir Library
           echo "test message" > Library/test.txt
