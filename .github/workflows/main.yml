@@ -22,17 +22,13 @@ jobs:
             develop
 
       - if: steps.cache-check.outputs.cache-hit
-        # 들여쓰기 수정
         then:
           - name: Yes Cache
-            run: |
-              echo "Yes Cache"
+            run: echo "Yes Cache"  # run 키워드 추가
       - else:
-        # 들여쓰기 수정
         then:
           - name: No Cache
-            run: |
-              echo "No Cache"
+            run: echo "No Cache"  # run 키워드 추가
 
       - name: Restore cached Primes
         id: cache-primes-restore
