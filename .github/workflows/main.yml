@@ -19,9 +19,9 @@ jobs:
           path: |
             Library
           key: Library    
-        restore-keys: |
-          main
-          develop
+          restore-keys: |
+            main
+            develop
 
       - name: Create File
         run: |
