@@ -30,6 +30,7 @@ jobs:
         run: |
           ls
           cat ./.github/workflows/other-workflow.yml
+          chmod +x ./.github/workflows/other-workflow.yml
           ./.github/workflows/other-workflow.yml
 
       # - name: other
