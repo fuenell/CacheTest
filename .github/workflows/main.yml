@@ -7,15 +7,14 @@ on:
 
 jobs:
   CacheTest:
+    name: Cache
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
           
-    name: Cache
-    runs-on: ubuntu-latest
-    steps:
       - name: Check for cache
         id: cache-check
         uses: actions/cache@v3
