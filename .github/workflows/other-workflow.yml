@@ -1,5 +1,8 @@
 name: other-workflow
 
+on:
+  workflow_dispatch: {}
+  
 jobs:
   CacheMain:
     runs-on: ubuntu-latest

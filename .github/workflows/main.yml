@@ -24,7 +24,7 @@ jobs:
       - run: |
           if [ "${{ steps.cache-check.outputs.cache-hit }}" == 'true' ]; then
             echo "Yes Cache"
-            uses: ./other-workflow.yml
+            ./other-workflow.yml
           else
             echo "No Cache"
           fi
