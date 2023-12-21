@@ -23,10 +23,13 @@ jobs:
             main
             develop
             
-      - name: check File
+      - name: create folder
         if: ${{ !needs.search.outputs.cache-hit }} == 'false'
         run: |
           mkdir -p Library
+          
+      - name: check File
+        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
         uses: actions/cache@v3
         with:
           path: Library
