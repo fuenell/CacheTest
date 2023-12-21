@@ -21,14 +21,12 @@ jobs:
             main
             develop
 
-      - if: steps.cache-check.outputs.cache-hit
-        then:
-          - name: Yes Cache
-            run: echo "Yes Cache"  # run 키워드 추가
-      - else:
-        then:
-          - name: No Cache
-            run: echo "No Cache"  # run 키워드 추가
+      - run: |
+          if [ "${{ steps.cache-check.outputs.cache-hit }}" == 'true' ]; then
+            echo "Yes Cache"
+          else
+            echo "No Cache"
+          fi
 
       - name: Restore cached Primes
         id: cache-primes-restore
