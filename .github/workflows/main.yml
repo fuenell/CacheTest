@@ -6,6 +6,36 @@ on:
       - v*
 
 jobs:
+  CacheMain:
+    name: Test
+    runs-on: ubuntu-latest
+    branches:
+      - main
+    steps:
+      - name: Check for cache
+        id: cache-check
+        uses: actions/cache@v3
+        with:
+          lookup-only: true
+          path: Library
+          key: Library
+          restore-keys: |
+            main
+            develop
+            
+      - name: check File
+        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
+        run: |
+          mkdir -p Library
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library
+          restore-keys: |
+            main
+            develop
+
+
   CacheTest:
     name: Cache
     runs-on: ubuntu-latest
@@ -29,10 +59,7 @@ jobs:
       - name: check File
         if: ${{ !needs.search.outputs.cache-hit }} == 'false'
         run: |
-          ls
-          cat ./.github/workflows/other-workflow.yml
-          chmod +x ./.github/workflows/other-workflow.yml
-          ./.github/workflows/other-workflow.yml
+          echo "false"
 
       - name: Restore cached Primes
         id: cache-primes-restore
