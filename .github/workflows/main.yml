@@ -7,6 +7,12 @@ on:
 
 jobs:
   CacheTest:
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+          
     name: Cache
     runs-on: ubuntu-latest
     steps:
@@ -20,8 +26,9 @@ jobs:
           restore-keys: |
             main
             develop
-      
-      - uses: other-workflow.yml
+
+      - name: other
+        uses: ./other-workflow.yml
       # - name: Check if
       #   if: ${{ !needs.search.outputs.cache-hit }} == 'false'
       #   uses: ./other-workflow.yml
