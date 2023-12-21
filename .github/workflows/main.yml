@@ -7,33 +7,17 @@ on:
       - v*
 
 jobs:
-  # CacheMain:
-  #   runs-on: ubuntu-latest
-  #   branches:
-  #     - main
-  #   if: ${{ startsWith(github.event.ref, 'refs/tags/v1.') }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #         lfs: true
-  #     - uses: actions/cache@v3
-  #       with:
-  #         path: Library
-  #         key: Library-main
-
   CacheTest:
     name: Cache
     runs-on: ubuntu-latest
     steps:
-      
       - name: Check for cache
         id: cache-check
         uses: actions/cache@v3
         with:
           lookup-only: true
           path: Library
-          key: Library    
+          key: Library
           restore-keys: |
             main
             develop
@@ -52,10 +36,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: Library
-          key: Library    
+          key: Library
           restore-keys: |
             main
             develop
+          lookup-only: false
 
       - name: Create File
         run: |
@@ -63,10 +48,24 @@ jobs:
           mkdir -p Library
           echo "test message" > Library/test.txt
 
-      # - name: Save Primes
-      #   id: cache-primes-save
-      #   uses: actions/cache/save@v2
-      #   with:
-      #     path: |
-      #       Library
-      #     key: Library
+  # CacheMain:
+  #   runs-on: ubuntu-latest
+  #   branches:
+  #     - main
+  #   if: ${{ startsWith(github.event.ref, 'refs/tags/v1.') }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #         lfs: true
+  #     - uses: actions/cache@v3
+  #       with:
+  #         path: Library
+  #         key: Library-main
+  # - name: Save Primes
+  #   id: cache-primes-save
+  #   uses: actions/cache/save@v2
+  #   with:
+  #     path: |
+  #       Library
+  #     key: Library
