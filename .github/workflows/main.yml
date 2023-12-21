@@ -45,8 +45,3 @@ jobs:
           [ -f Library/test.txt ] && cat Library/test.txt
           mkdir -p Library
           echo "test message" > Library/test.txt
-
-  CacheMain:
-    runs-on: ubuntu-latest
-    branches:
-      - main

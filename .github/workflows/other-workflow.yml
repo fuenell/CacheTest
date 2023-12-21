@@ -2,12 +2,14 @@ name: other-workflow
 
 on:
   workflow_dispatch: {}
-  
+
 jobs:
   CacheMain:
+    name: Test
     runs-on: ubuntu-latest
     branches:
       - main
+    steps:
       - name: Create File
         run: |
           echo "test message"
