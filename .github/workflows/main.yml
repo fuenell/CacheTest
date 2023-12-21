@@ -26,7 +26,7 @@ jobs:
             echo "Yes Cache"
           else
             echo "No Cache"
-            ./other-workflow.yml
+            .github/workflows/other-workflow.yml
           fi
 
       - name: Restore cached Primes
