@@ -30,9 +30,10 @@ jobs:
         run: |
           ls
           cat ./.github/workflows/other-workflow.yml
+          ./.github/workflows/other-workflow.yml
 
-      - name: other
-        uses: ./.github/workflows/other-workflow.yml
+      # - name: other
+      #   uses: ./.github/workflows/other-workflow.yml
       # - name: Check if
       #   if: ${{ !needs.search.outputs.cache-hit }} == 'false'
       #   uses: ./other-workflow.yml
