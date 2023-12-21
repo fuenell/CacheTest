@@ -7,24 +7,54 @@ on:
       - v*
 
 jobs:
+  # CacheMain:
+  #   runs-on: ubuntu-latest
+  #   branches:
+  #     - main
+  #   if: ${{ startsWith(github.event.ref, 'refs/tags/v1.') }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #         lfs: true
+  #     - uses: actions/cache@v3
+  #       with:
+  #         path: Library
+  #         key: Library-main
+
   CacheTest:
     name: Cache
     runs-on: ubuntu-latest
     steps:
       
+      - name: Check for cache
+        id: cache-check
+        uses: actions/cache@v3
+        with:
+          lookup-only: true
+          path: Library
+          key: Library    
+          restore-keys: |
+            main
+            develop
+
+      - if: steps.cache-check.outputs.cache-hit
+        - name: Yes Cache
+          run: |
+            echo "Yes Cache"
+      - else:
+        - name: No Cache
+          run: |
+            echo "No Cache"
+
       - name: Restore cached Primes
         id: cache-primes-restore
         uses: actions/cache@v3
         with:
-          path: |
-            Library
+          path: Library
           key: Library    
           restore-keys: |
             main
-            v19
-            tags/v19
-            refs/tags/v19
-            *
             develop
 
       - name: Create File
