@@ -24,9 +24,9 @@ jobs:
       - run: |
           if [ "${{ steps.cache-check.outputs.cache-hit }}" == 'true' ]; then
             echo "Yes Cache"
-            ./other-workflow.yml
           else
             echo "No Cache"
+            ./other-workflow.yml
           fi
 
       - name: Restore cached Primes
