@@ -24,6 +24,7 @@ jobs:
       - run: |
           if [ "${{ steps.cache-check.outputs.cache-hit }}" == 'true' ]; then
             echo "Yes Cache"
+            uses: ./other-workflow.yml
           else
             echo "No Cache"
           fi
@@ -45,24 +46,7 @@ jobs:
           mkdir -p Library
           echo "test message" > Library/test.txt
 
-  # CacheMain:
-  #   runs-on: ubuntu-latest
-  #   branches:
-  #     - main
-  #   if: ${{ startsWith(github.event.ref, 'refs/tags/v1.') }}
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-  #         lfs: true
-  #     - uses: actions/cache@v3
-  #       with:
-  #         path: Library
-  #         key: Library-main
-  # - name: Save Primes
-  #   id: cache-primes-save
-  #   uses: actions/cache/save@v2
-  #   with:
-  #     path: |
-  #       Library
-  #     key: Library
+  CacheMain:
+    runs-on: ubuntu-latest
+    branches:
+      - main

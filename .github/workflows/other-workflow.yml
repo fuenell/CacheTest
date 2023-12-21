@@ -1,0 +1,10 @@
+name: other-workflow
+
+jobs:
+  CacheMain:
+    runs-on: ubuntu-latest
+    branches:
+      - main
+      - name: Create File
+        run: |
+          echo "test message"
