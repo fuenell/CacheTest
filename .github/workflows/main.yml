@@ -27,7 +27,7 @@ jobs:
             develop
             
       - name: check File
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.cache-check.outputs.cache-hit != 'true'
         run: |
           echo "false"
 
