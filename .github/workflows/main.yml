@@ -27,7 +27,7 @@ jobs:
             develop
             
       - name: check File
-        if: ${{ !needs.search.outputs.cache-check }} == 'false'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           echo "false"
 

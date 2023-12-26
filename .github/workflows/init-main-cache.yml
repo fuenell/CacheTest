@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: check for cache
-        id: cache-check
         uses: actions/cache@v3
         with:
           lookup-only: true
@@ -21,12 +20,12 @@ jobs:
             main
             
       - name: create folder
-        if: ${{ !needs.search.outputs.cache-check }} == 'false'
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           mkdir -p Library
           
       - name: save cache
-        if: ${{ !needs.search.outputs.cache-check }} == 'false'
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v3
         with:
           path: Library
