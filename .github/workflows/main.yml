@@ -1,55 +1,45 @@
-name: Cache project
+name: Build project
 
 on:
   push:
     branches:
       - main
-    tags:
-      - "v*"
 
 jobs:
-  CacheTest:
-    name: Cache
+  buildForAndroidPlatform:
+    name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - Android
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
-
-      - name: Check for cache
-        id: cache-check
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
           path: Library
-          key: Library
-          restore-keys: |
-            main
-          lookup-only: true
-            
-      - name: check File
-        if: steps.cache-check.outputs.cache-hit != 'true'
-        run: |
-          echo "false"
-
-      - name: Restore cached Primes
-        id: cache-primes-restore
-        uses: actions/cache/restore@v3
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: Library-
+          
+      - uses: game-ci/unity-builder@v3
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          path: Library
-          key: Library
-          restore-keys: |
-            main
+          versioning: Semantic
+          targetPlatform: ${{ matrix.targetPlatform }}
+          # androidExportType: 'androidAppBundle'
+          # androidKeystoreName: user.keystore
+          # androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          # androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+          # androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS }}
+          # androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
+          customParameters: -BuildOptions CompressWithLz4
 
-      - name: Create File
-        run: |
-          [ -f Library/test.txt ] && cat Library/test.txt
-          mkdir -p Library
-          echo "test message" > Library/test.txt
-
-      - name: Save cached Primes
-        id: cache-primes-save
-        uses: actions/cache/save@v3
+      - uses: actions/upload-artifact@v3
         with:
-          path: Library
-          key: Library
+          name: build-${{ matrix.targetPlatform }}
+          path: build/${{ matrix.targetPlatform }}
