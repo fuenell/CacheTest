@@ -21,12 +21,12 @@ jobs:
             main
             
       - name: create folder
-        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
+        if: ${{ !needs.search.outputs.cache-check }} == 'false'
         run: |
           mkdir -p Library
           
       - name: save cache
-        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
+        if: ${{ !needs.search.outputs.cache-check }} == 'false'
         uses: actions/cache/save@v3
         with:
           path: Library
