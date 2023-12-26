@@ -35,7 +35,7 @@ jobs:
 
       - name: Restore cached Primes
         id: cache-primes-restore
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         with:
           path: Library
           key: Library
@@ -50,9 +50,9 @@ jobs:
           mkdir -p Library
           echo "test message" > Library/test.txt
 
-      - name: Restore cached Primes
-        id: cache-primes-restore
-        uses: actions/cache@v3
+      - name: Save cached Primes
+        id: cache-primes-save
+        uses: actions/cache/save@v3
         with:
           path: Library
           key: Library
