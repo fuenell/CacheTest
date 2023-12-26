@@ -1,15 +1,35 @@
-name: other-workflow
+name: Init Main Cache
 
 on:
-  workflow_dispatch: {}
-
-jobs:
-  CacheMain:
-    name: Test
-    runs-on: ubuntu-latest
+  workflow_dispatch:
     branches:
       - main
+
+jobs:
+  InitMainCache:
+    name: Init Main Cache
+    runs-on: ubuntu-latest
     steps:
-      - name: Create File
+      - name: check for cache
+        id: cache-check
+        uses: actions/cache@v3
+        with:
+          lookup-only: true
+          path: Library
+          key: Library
+          restore-keys: |
+            main
+            
+      - name: create folder
+        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
         run: |
-          echo "test message"
+          mkdir -p Library
+          
+      - name: save cache
+        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
+        uses: actions/cache/save@v3
+        with:
+          path: Library
+          key: Library
+          restore-keys: |
+            main

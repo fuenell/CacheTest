@@ -6,39 +6,6 @@ on:
       - v*
 
 jobs:
-  CacheMain:
-    name: Test
-    runs-on: ubuntu-latest
-    branches:
-      - main
-    steps:
-      - name: Check for cache
-        id: cache-check
-        uses: actions/cache@v3
-        with:
-          lookup-only: true
-          path: Library
-          key: Library
-          restore-keys: |
-            main
-            develop
-            
-      - name: create folder
-        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
-        run: |
-          mkdir -p Library
-          
-      - name: check File
-        if: ${{ !needs.search.outputs.cache-hit }} == 'false'
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library
-          restore-keys: |
-            main
-            develop
-
-
   CacheTest:
     name: Cache
     runs-on: ubuntu-latest
