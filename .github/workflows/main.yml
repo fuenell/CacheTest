@@ -21,12 +21,11 @@ jobs:
         id: cache-check
         uses: actions/cache@v3
         with:
-          lookup-only: true
           path: Library
           key: Library
           restore-keys: |
             main
-            develop
+          lookup-only: true
             
       - name: check File
         if: steps.cache-check.outputs.cache-hit != 'true'
@@ -41,8 +40,6 @@ jobs:
           key: Library
           restore-keys: |
             main
-            develop
-          lookup-only: false
 
       - name: Create File
         run: |
@@ -58,5 +55,3 @@ jobs:
           key: Library
           restore-keys: |
             main
-            develop
-          lookup-only: false
