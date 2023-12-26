@@ -2,8 +2,10 @@ name: Cache project
 
 on:
   push:
+    branches:
+      - main
     tags:
-      - v*
+      - "v*"
 
 jobs:
   CacheTest:
@@ -47,3 +49,14 @@ jobs:
           [ -f Library/test.txt ] && cat Library/test.txt
           mkdir -p Library
           echo "test message" > Library/test.txt
+
+      - name: Restore cached Primes
+        id: cache-primes-restore
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library
+          restore-keys: |
+            main
+            develop
+          lookup-only: false
